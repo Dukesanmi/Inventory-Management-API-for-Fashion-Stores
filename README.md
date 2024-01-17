@@ -14,6 +14,7 @@ Welcome to the Fashion Store Inventory Management API documentation. This API is
    - [Edit User Information](#edit-user-information)
    - [Delete User](#delete-user)
 3. [Product Management](#product-management)
+   - [Authorization Token](#authorization-token)
    - [Create Product](#create-product)
    - [View Products](#view-products)
    - [Edit/Update Product Info](#editupdate-product-info)
@@ -102,7 +103,7 @@ The API is still currently in development and so will be available at `http://lo
 
 ## Product Inventory Management
 
-### Authorization token 
+### Authorization Token 
 A unique token will be generated and returned to you when you sign up and whenever you log into your account. For authorization, add this token to your request header in the format of `Bearer <token>`. This will enable you access API resources.
 
 ### Add new Product
