@@ -122,7 +122,7 @@ A unique token will be generated and returned to you when you sign up and whenev
   "store": "<userId>"
 }
 ```
-Note: Category can be either `Clothing`, `Foot wears`, `Head wears` or `Accessories` and Currency can be either of `NGN`, `USD`, `GBP`, `EUR` or `CAD`.
+Note: The category field can have either `Clothing`, `Foot wears`, `Head wears` or `Accessories` as its value and the currency field can have either `NGN`, `USD`, `GBP`, `EUR` or `CAD` as its value.
 
 ### View Products
 
