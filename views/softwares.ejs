@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Software projects</title>
+</head>
+<style type="">
+	section {
+		margin: 0 49px 0 11px;
+	}
+	h4 {
+		font-size: 1.9rem;
+	}
+	a {
+		text-decoration: none;
+		font-size: 1.1rem;
+	}
+	.section {
+		display: flex;
+		justify-content: space-between;
+		border: 1px solid lightgray;
+		border-radius: 3px;
+		height: 30px;
+		padding: 16px;
+		margin: 0 0 10px 0;
+	}
+	button {
+		background-color: transparent;
+		outline: none;
+		border: none;
+		font-size: 1rem;
+	}
+</style>
+<body>
+	<section>
+    	<div class="section-container">
+    		<div class="section-header">
+    			<h4 align="center">Software Projects</h4>
+    		</div>
+    		<div class="section-wrapper" id="section-wrapper">
+    			<% if(softwares.length > 0) { %>
+    				<% for(var i = softwares.length - 1; i >= 0; i--) { %>
+		    			<div class="section">
+		    				<a href="<%=softwares[i].live_url%>" target="_blank"><%=softwares[i].name%></a>
+		    				<a href="/edit_software_page/<%=softwares[i]._id%>">Edit</a>
+		    				<a href="#" onclick="deleteClicked('<%=softwares[i]._id%>')">Delete</a>
+		    			</div>
+	    			<% } %>
+    			<%} else {%>
+    				<h5 align="center">No projects here!</h5>
+    			<% } %>
+    			<br><br><br>
+
+    			<a href="/">Back home</a>
+    		</div>
+    	</div>
+    </section>
+    <script type="text/javascript">
+    	const log = console.log; 
+
+    	async function deleteClicked(id) {
+
+    		try {
+	      		const res = await fetch(`/delete_software/${id}`, { 
+	        		method: 'DELETE', 
+	        		headers: {'Content-Type': 'application/json'}
+	      		});
+
+	      		const data = await res.json();
+
+				if (data.success) {
+	       	 		console.log("Software project Deleted");
+	       	 		location.assign(`/softwares_page`);
+	      		}
+
+	    	}
+	    	catch (err) {
+	      		return err;
+	    	}
+
+    	}
+    </script>
+</body>
+</html>

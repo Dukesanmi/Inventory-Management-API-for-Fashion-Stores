@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New software project</title>
+</head>
+<style type="">
+	section {
+		margin: 0 0 0 9px;
+	}
+	h4 {
+		font-size: 1.5rem;
+	}
+	button {
+		padding: 5px 7px;
+		cursor: pointer;
+	}
+	input, textarea {
+		width: 30%;
+	}
+	textarea {
+		height: 50px;
+	}
+	input[type=file]::file-selector-button {
+		margin-top: 1em;
+		outline: none;
+		border: 1px solid lightgray;
+		padding: 5px;
+		background-color: lightgray;
+		cursor: pointer;
+	}
+</style>
+<body>
+	<section>
+    	<div class="form-container">
+    		<div id="form-wrapper" class="card">
+    			<h4 align="">Add a new software project</h4>
+    			<form>
+    				<label for="name" class="form-items">
+    					<span class="form-title">Name</span><br>
+    					<input type="text" name="name" id="name" class="input-field" placeholder="Project's Name" required>
+						<div id="name-error" class="name error"></div><br>
+    				</label><br>
+    				<label for="url" class="form-items">
+    					<span class="form-title">Live URL</span><br>
+    					<input type="text" name="live_url" id="url" class="input-field" placeholder="Project's live url" required>
+					</label><br><br>
+					<label for="github" class="form-items">
+    					<span class="form-title">Github URL</span><br>
+    					<input type="text" name="github_url" id="github" class="input-field" placeholder="Project's github url" required>
+					</label><br><br>
+					<label for="image" class="form-items">
+							<span class="form-title">Project Image</span>
+				        	<input type="file" name="image_url" id="image" class="input-field" placeholder="" accept="image/*" required>
+						</label><br><br>
+					<label for="description" class="form-items">
+    					<span class="form-title">Description</span><br>
+    					<textarea name="description" id="description"></textarea>
+					</label><br><br>
+    				<div class="btn-wrapper">
+    					<button type="submit" value="save">Add new software project</button>
+    				</div>
+    			</form>
+    		</div>
+    	</div>
+    </section>
+</body>
+<script type="text/javascript">
+	const log = console.log;
+	const form = document.querySelector('form');
+    const nameError = document.querySelector('.name.error');
+
+    nameError.style.display = "none";
+
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // reset errors
+        nameError.textContent = '';
+        
+        const btn = document.querySelector('button[value=save]');
+        const avatar = document.querySelector('input[type="file"]');
+        const formData = new FormData(form, btn);
+        const data = formData.append('avatar', avatar.files[0].name);
+        var formd;
+
+        for (const [key, value] of formData) {
+             log(`${key}: ${value}\n`);
+
+        }
+        
+        try {
+            const res = await fetch('/new_software', { 
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+            console.log(data.savedSoftware);
+
+            if (data.errors) {
+                nameError.textContent = data.errors.name;
+                nameError.style.display = "block";
+                nameError.style.color = 'red';
+            }
+
+            if (data.savedSoftware) {
+                location.assign(`/softwares_page`);
+            }
+
+        }
+        catch (err) {
+            console.log(err);
+            throw err;
+        }
+
+    });
+
+ 
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Update writing project</title>
+</head>
+<style type="">
+	section {
+		margin: 0 0 0 9px;
+	}
+	h4 {
+		font-size: 1.5rem;
+	}
+	button {
+		padding: 5px 7px;
+		cursor: pointer;
+	}
+	input, textarea {
+		width: 30%;
+	}
+	textarea {
+		height: 50px;
+	}
+	input[type=file]::file-selector-button {
+		margin-top: 1em;
+		outline: none;
+		border: 1px solid lightgray;
+		padding: 5px;
+		background-color: lightgray;
+		cursor: pointer;
+	}
+</style>
+<body>
+	<section>
+    	<div class="form-container">
+    		<div id="form-wrapper" class="card">
+    			<h4 align="">Update writing project</h4>
+    			<form>
+    				<label for="topic" class="form-items">
+    					<span class="form-title">Topic</span><br>
+    					<input type="text" name="topic" id="topic" class="input-field" value="<%= writing.topic %>" required>
+						<div id="name-error" class="name error"></div><br>
+    				</label><br>
+    				<label for="url" class="form-items">
+    					<span class="form-title">Live URL</span><br>
+    					<input type="text" name="live_url" id="url" class="input-field" placeholder="Project's live url" value="<%=writing.live_url%>" required>
+					</label><br><br>
+					<label for="description" class="form-items">
+    					<span class="form-title">Description</span><br>
+    					<textarea name="description" id="description"><%= writing.description%></textarea>
+					</label><br><br>
+    				<div class="btn-wrapper">
+    					<button type="submit" value="save">Update writing project</button>
+    				</div>
+    			</form>
+    		</div>
+    	</div>
+    </section><br><br>
+    <a href="/">Back home</a>
+</body>
+<script type="text/javascript">
+	const log = console.log;
+    const pagdata = JSON.parse('<%- JSON.stringify(writing) %>');
+    log(pagdata);
+	const form = document.querySelector('form');
+    const nameError = document.querySelector('.name.error');
+
+    nameError.style.display = "none";
+    log(form.description.value);
+
+      
+	// Update offering	
+
+	form.addEventListener('submit', async (e) => {
+    	e.preventDefault();
+
+    	// reset errors
+    	nameError.textContent = '';
+
+
+    	// get values
+    	const topic = form.topic.value;
+    	const live_url = form.live_url.value;
+    	const description = form.description.value;
+    	const id = pagdata._id;
+    
+    	try {
+      		const res = await fetch(`/edit_writing/${id}`, { 
+        		method: 'PATCH', 
+        		body: JSON.stringify({ topic, live_url, description, id }),
+        		headers: {'Content-Type': 'application/json'}
+      		});
+
+      		const data = await res.json();
+
+      		if (data.errors) {
+        		nameError.textContent = data.errors.password;
+    			nameError.style.display = "block";
+      		}
+
+			if (data.writingSave) {
+       	 		location.assign(`/edit_writing_page/${id}`);
+      		}
+
+    	}
+    	catch (err) {
+      		return err;
+    	}
+
+  	});
+ 
+</script>
+</body>
+</html>
