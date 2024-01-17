@@ -104,7 +104,7 @@ The API is still currently in development and so will be available at `http://lo
 ## Product Inventory Management
 
 ### Authorization Token 
-A unique token will be generated and returned to you when you sign up and whenever you log into your account. For authorization, add this token to your request header in the format of `Bearer <token>`. This will enable you access API resources.
+A unique token will be generated and returned to you when you sign up and whenever you log into your account. For authorization, add this token to your request header in the format of `Bearer <token>`. This will enable you access resources in the below endpoints.
 
 ### Add new Product
 
