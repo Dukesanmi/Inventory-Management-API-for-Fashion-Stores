@@ -26,7 +26,7 @@ Welcome to the Fashion Store Inventory Management API documentation. This API is
 
 - Node.js installed on your machine
 - MongoDB installed and running
-- Clone this repository: `git clone <repository-url>`
+- Clone this repository: `git clone https://github.com/Dukesanmi/Inventory-Management-API-for-Fashion-Stores.git`
 - Navigate to the project directory: `cd fashion-store-api`
 - Install dependencies: `npm install`
 
